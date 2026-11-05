@@ -19,6 +19,8 @@
 # For a terminal passed no-mistakes run, a matching merge-poll retirement
 # receipt is local merged evidence; otherwise a 5s-bounded forge read is tried.
 # FM_CREW_STATE_NO_FORGE=1 keeps the receipt read but skips the forge fallback.
+# FM_CREW_STATE_OBSERVE_ONLY=1 never invokes the ship done acceptance path,
+# which can latch a local readiness head; unverified ship done stays unknown.
 # An absent or unreadable PR identity yields an honest unknown, never an
 # optimistic merged claim.
 # Output is one stable, parseable, token-tight line firstmate can read every
@@ -325,6 +327,9 @@ fi
 # not treated as finished-and-safe.
 emit_ship_status_done() {  # [extra-detail]
   local extra=${1:-} reason
+  if [ "${FM_CREW_STATE_OBSERVE_ONLY:-0}" = 1 ]; then
+    emit unknown status-log "ship completion not verified by read-only observation"
+  fi
   if reason=$(fm_dod_accept_ship_done "$KIND" "$(meta_value mode)" "$WT" "$(meta_value project)" "$LOG_LINE" "$STATE" "$ID" "$META"); then
     emit "done" status-log "$(status_line_note "$LOG_LINE")${extra:+${SEP}$extra}"
   fi

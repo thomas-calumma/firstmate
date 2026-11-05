@@ -44,6 +44,7 @@ import type { EngineInterface, Register, RenderElement, RenderInput } from "clau
 import {
   CALM_WORKING_SHIP_TICK_MS,
   createCalmWorkingShipSprite,
+  createCalmEnterpriseSprite,
 } from "../lib/fm-calm-working-ship-sprite.ts";
 import {
   CALM_SHIP_RASTER_KEY,
@@ -92,7 +93,8 @@ const finalReplies = new Set<string>();
 // Each doorbell's record verdict, by record path. Records are immutable once published
 // but pruned after seven days, so every invalidation drops the cache and rechecks.
 const doorbellVerdicts = new Map<string, Promise<boolean>>();
-const sprite = createCalmWorkingShipSprite();
+let sprite = createCalmWorkingShipSprite();
+let enterpriseSprite: ReturnType<typeof createCalmEnterpriseSprite> | undefined;
 let palette: CalmShipRasterPalette = CALM_SHIP_RASTER_PALETTES.light;
 // Every Spinner site currently drawing the boat, by its requestId, with the mounted
 // Raster size a blit must repeat exactly.
@@ -167,6 +169,15 @@ async function load($: EngineInterface): Promise<void> {
     $.plugin.root,
   );
   calm = parseCalmPreference(await readText($, preferencePath));
+  const shipChoice = await readText($, `${preferencePath}-ship`);
+  const reducedMotion = await $.env.get("FM_CALM_REDUCED_MOTION");
+  if (shipChoice?.trim() === "enterprise") {
+    enterpriseSprite = createCalmEnterpriseSprite(reducedMotion === "1");
+    sprite = enterpriseSprite;
+  } else {
+    enterpriseSprite = undefined;
+    sprite = createCalmWorkingShipSprite();
+  }
   palette = CALM_SHIP_RASTER_PALETTES[calmShipPaletteFamily(await readTheme($))];
   try {
     const restored = classifyRestoredTranscript(await $.session.messages());
@@ -223,7 +234,10 @@ async function repaintShip($: EngineInterface): Promise<void> {
     });
     // A denied blit means the site no longer shows this plugin's Raster (the turn
     // settled, or a resize redrew it); forget it until the next Spinner drawing.
-    if (result.deny !== undefined && sites.get(requestId) === site) sites.delete(requestId);
+    if (result.deny !== undefined && sites.get(requestId) === site) {
+      sites.delete(requestId);
+      if (sites.size === 0) enterpriseSprite?.setState("waiting");
+    }
   }
 }
 
@@ -460,6 +474,7 @@ export const register: Register = (on) => {
       sites.delete(e.requestId);
       return next(e);
     }
+    if (sites.size === 0) enterpriseSprite?.setState("working");
     const columns = calmShipRasterColumns(e.viewport?.columns);
     const packed = packCalmShipRasterCells(sprite.frame(columns), columns, palette);
     sites.set(e.requestId, { columns, rows: packed.rows });

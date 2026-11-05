@@ -153,6 +153,13 @@ One `/calm` choice therefore applies on either harness.
 Both resolve the home in this order: `FM_HOME`, `FM_ROOT_OVERRIDE`, then the tracked code root derived from their own path under it.
 When `FM_CONFIG_OVERRIDE` is present for tests or specialized setup, it selects the config directory directly.
 
+The separate optional `config/calm-ship` file selects the working presentation for both harnesses at session start.
+Its value `enterprise` selects the Enterprise in both harnesses.
+Pi also accepts `enterprise-cage`, `enterprise-phase2`, `enterprise-refit`, and `enterprise-b` to select additional profiles; Claude Code uses the stock sailboat for those values.
+Missing, unreadable, or any other value selects the stock sailboat.
+Set `FM_CALM_REDUCED_MOTION=1` before session start to keep the Enterprise static.
+See [Calm mode](calm.md#optional-enterprise-presentation) for the harness-specific display limits.
+
 ### Values and default
 
 | Value or file state | Result |

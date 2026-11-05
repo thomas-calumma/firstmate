@@ -597,7 +597,65 @@ JS
   pass "the mod's doorbell port agrees with bin/fm-operational-input.sh doorbell-kind on all $count cases: every record the owner writes and every unbacked or malformed near miss"
 }
 
+test_enterprise_lifecycle() {
+  cat >"$TMP_ROOT/enterprise.mjs" <<JS
+import assert from "node:assert/strict";
+import { pathToFileURL } from "node:url";
+const core = await import(pathToFileURL($(js_string "$MOD") + "/lib/fm-calm-working-ship-sprite.ts").href);
+const pi = await import(pathToFileURL($(js_string "$PI_SHIP")).href);
+const sprite = core.createCalmEnterpriseSprite();
+const renderer = pi.createCalmWorkingShipAnimation(sprite);
+const text = () => sprite.frame(80).map(row => row.map(run => run.text).join("")).join("\\n");
+const sky = () => sprite.frame(240)[0].map(run => run.text).join("");
+const normalSky = sky();
+const stars = Array.from(normalSky.matchAll(/\./g), match => match.index);
+const gaps = stars.slice(1).map((column, index) => column - stars[index]);
+assert.ok(new Set(gaps).size >= 3, "normal stars have irregular spacing");
+assert.equal(sky(), normalSky, "rendering twice does not resample stars");
+const waiting = text();
+assert.ok(waiting.includes("██"));
+assert.ok(!waiting.includes("─"));
+sprite.setState("working");
+for (let i = 0; i < 6; i++) sprite.tick();
+assert.ok(text().includes("─"));
+for (const row of sprite.frame(80)) {
+  const cells = row.flatMap(run => Array.from(run.text, glyph => ({ glyph, color: run.color })));
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].color === "boat") {
+      assert.notEqual(cells[i - 1]?.color, "water", "stars clear the ship silhouette");
+      assert.notEqual(cells[i + 1]?.color, "water", "stars clear the ship silhouette");
+    }
+  }
+}
+const warpSky = sky();
+const strokes = [...warpSky.matchAll(/─+/g)].filter(match => match.index > 0 && match.index + match[0].length < 240);
+assert.ok(strokes.length >= 4 && strokes.every(match => match[0].length >= 5), "warp streaks are longer");
+const warpGaps = strokes.slice(1).map((match, index) => match.index - strokes[index].index);
+assert.ok(new Set(warpGaps).size >= 3, "warp stars have irregular spacing");
+assert.equal(sky(), warpSky, "warp rendering is stable without a tick");
+sprite.tick();
+assert.equal(sky().slice(0, 230), warpSky.slice(3, 233), "warp field translates without resampling");
+sprite.setState("waiting");
+assert.ok(!text().includes("─"));
+assert.ok(renderer.render(80).join("").includes("█"));
+sprite.setState("failure");
+for (let i = 0; i < 10; i++) sprite.tick();
+assert.ok(text().includes("<==##==>"));
+for (const width of [1, 5, 30, 48, 80]) {
+  for (const row of sprite.frame(width)) assert.equal(Array.from(row.map(run => run.text).join("")).length, width);
+}
+const still = core.createCalmEnterpriseSprite(true);
+still.setState("working");
+const before = JSON.stringify(still.frame(80));
+for (let i = 0; i < 20; i++) still.tick();
+assert.equal(JSON.stringify(still.frame(80)), before);
+JS
+  run_node "$TMP_ROOT/enterprise.mjs" || fail "Enterprise state and width regression failed"
+  pass "Enterprise frames enter and leave working, fit narrow widths, and respect reduced motion"
+}
+
 test_plugin_shape
+test_enterprise_lifecycle
 test_shared_sprite_and_pi_rendering
 test_raster_packing
 test_presentation_policy

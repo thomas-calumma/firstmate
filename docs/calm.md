@@ -26,11 +26,26 @@ Calm hides such a block only in the first case below:
 
 Streaming text and the genuine reply that ends a response remain visible.
 
+## Optional Enterprise presentation
+
+The stock sailboat remains the default.
+The [Calm preference configuration](configuration.md#calm-preference-configcalm) describes how to select the Enterprise and reduce motion.
+
+On Pi, the Enterprise stays visible while Calm is on, with moving point stars while waiting, faster streaks during a run, and a Klingon ship after an agent error when the terminal is wide enough.
+When Pi detects an image protocol, it draws a pixel scene with a warp trail and occasional encounters.
+The 32-pixel station icon is drawn at its native size in the image buffer, whose dimensions follow Pi’s terminal cell metrics.
+When images are unavailable or the terminal is narrow, the Unicode Enterprise remains the fallback.
+A short change of star pattern marks entry and exit, and narrow terminals use a smaller ship.
+The error itself remains visible in the transcript.
+The Enterprise profiles are based on [Pixel Trek Enterprises by vampireslug](https://pixeljoint.com/pixelart/87681.htm), and the station icon is from [Deep Space Nine Icons by buddysWorld](https://www.newgrounds.com/art/view/buddysworld/deep-space-nine-icons).
+Rights for redistributing these artworks have not been established.
+On Claude Code, the available Spinner hook only draws while a run is active, so the Enterprise disappears when the working row disappears; waiting, exit, and failure scenes are not available through this hook.
+
 ## Pi
 
 ### Working boat
 
-While Calm is active and an agent run is under way, Calm hides Pi's built-in `Working...` row and shows a small two-row animated boat in its place.
+With the default stock presentation, while Calm is active and an agent run is under way, Calm hides Pi's built-in `Working...` row and shows a small two-row animated boat in its place.
 No separate Calm status row is added.
 The boat claims the same Pi working-row widget slot as the standalone Pi Calm extension, so a session that loads both Calms shows one boat rather than two, and turning Firstmate Calm off does not clear the standalone boat.
 While Calm is off, Pi's stock working row is left exactly as Pi renders it.
@@ -162,6 +177,41 @@ How Calm handles that shared slot depends on whether Calm was already on when th
 - `.pi/extensions/lib/fm-calm-pending-operational-layout.ts` owns the queued-row adapter and its session capability check.
 - `.pi/extensions/lib/fm-calm-working-ship.ts` owns Pi's animated working presentation over the sprite geometry both harnesses share in `.claude/mods/firstmate-calm/lib/fm-calm-working-ship-sprite.ts`.
 
+### Optional Pi task panel
+
+The separate `.pi/extensions/fm-task-panel.ts` companion starts disabled and appears beside an active Enterprise scene after `/fleet-panel on`.
+`/fleet-panel off` disables it without changing the Enterprise profile.
+Use `/fleet-panel next` and `/fleet-panel prev` to page through open direct reports, and `/fleet-panel refresh` to request a fresh observation.
+The framed view places tasks and quota beside the scene when there is room, and stacks them on narrower terminals.
+On a narrow terminal, `/fleet-panel view` hides or shows the scene.
+Long task titles wrap and continue across pages.
+The same companion owns MAIN's `fm_attention` delivery tool for concrete questions or approvals, work ready to view, completed requested results (including healthy results), and important actionable failures.
+MAIN checks the current state and chooses whether a result needs the user's attention; raw worker status, an internal reviewer finishing, and a branch processing request do not imply that it does.
+The tool's active prompt guidance owns that selection policy and identity requirements, without a separate classifier or polling source.
+It persists and renders the complete Markdown result in the conversation before requesting the locally selected intercom clip through macOS `afplay`.
+The included recording is the [selected TrekCore intercom clip](https://www.trekcore.com/audio/toscomputer/tos_intercom_whistle.mp3); redistribution permission for this recording has not been established.
+With an Enterprise profile selected (or the panel explicitly enabled), sound is active for the session.
+The panel can remain hidden: its on/off controls affect only the panel, while `/fleet-panel mute` and `/fleet-panel unmute` control sound.
+Mute lasts until the next Pi session start or extension reload, survives panel off/on, and never writes configuration.
+A delivery's stable matter key, kind and revision identify it independently of other open questions; reworded reminders and retries reuse that identity.
+The persisted visible entry suppresses duplicate text and sound across reload or resume of that conversation, including deliveries made while muted; a genuinely new result or reopened matter uses a new revision.
+A new conversation has its own delivery history, so MAIN must still check old supervision outcomes before relaying them.
+A burst permits one playing whistle and one coalesced follow-up, with no overlapping players.
+Mute and session shutdown cancel playback.
+Sound is limited to interactive Pi on macOS; unsupported hosts or unavailable playback remain silent, with all visual information preserved.
+After an approved local update, run Pi's `/reload` to load the updated companion and its tool guidance; `/fleet-panel on` is needed only for the optional panel, and no active session is reloaded automatically.
+The real-SDK delivery and replay guard is `tests/fixtures/fm-attention-sdk.mjs`, run by the focused Calm suite and the Pi production-consumer matrix with stubbed audio.
+Quota reads use up to two explicit providers from `config/quota-panel-providers`, one per line, or fall back to the explicit default provider in `config/crew-dispatch.json` when that file is absent, excluding Muse, via a bounded `quota-axi` request with credential refresh disabled and five-minute cache reuse.
+They do not prompt for authentication.
+A missing or ambiguous window, reset, provider selection, or reading is shown as unavailable or unknown.
+Only a uniquely identified, fresh weekly, session, or monthly window supplies a remaining percentage and relative reset duration; shared subwindows are excluded, and this is not an effective limit across other windows.
+Panel snapshot refreshes do not add fleet text to the model context or make model calls.
+It caches the local snapshot and watches the home state and data directories, coalescing file-triggered changes with at least ten seconds between snapshot starts.
+A manual refresh may start sooner.
+A snapshot runs local processes and reads local files; the panel is not free of CPU or I/O cost.
+A current-state observation can become stale without a file change, so the panel labels it as last observed or last reported and offers manual refresh.
+The snapshot excludes other homes and avoids the full fleet view's remote-summary collection.
+
 ### Pi regression entry points
 
 ```sh
@@ -206,7 +256,7 @@ Toggling Calm redraws every hooked row already on screen, so rows drawn before t
 
 ### Working sailboat on Claude Code
 
-While Calm is on, the stock working row (`Sauteing... (12s · 300 tokens)`) becomes the same two-row sailboat Pi draws, from the same shared sprite geometry.
+With the default stock presentation and Calm on, the stock working row (`Sauteing... (12s · 300 tokens)`) becomes the same two-row sailboat Pi draws, from the same shared sprite geometry.
 The sailboat fills the row inside the transcript margin, under one blank row so its sail never touches the highlighted prompt above it.
 It repaints on the boat's 220ms cadence, with the hull moving every 880ms.
 It reflows on resize, and appears and disappears exactly where the stock row would.
