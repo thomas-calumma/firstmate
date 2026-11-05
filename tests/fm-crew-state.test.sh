@@ -2558,6 +2558,26 @@ test_unpushed_ship_done_is_blocked() {
   pass "unpushed ship done: is current-state blocked"
 }
 
+test_observation_does_not_latch_local_done() {
+  reset_fakes
+  local d out before
+  d=$(new_case observe-local-done)
+  make_repo_on_branch "$d/wt" fm/observe
+  make_fakebin "$d" >/dev/null
+  fm_write_meta "$d/state/observe.meta" "window=fm:fm-observe" "worktree=$d/wt" \
+    "project=$d/wt" "kind=ship" "mode=local-only" "harness=claude"
+  printf 'done: ready in branch fm/observe\n' > "$d/state/observe.status"
+  FM_FAKE_AXI_STATUS=""; FM_FAKE_RUNS_LIST=""; FM_FAKE_BUSY=0
+  arm_idle_record "$d/state" observe
+  before=$(cat "$d/state/observe.meta")
+  out=$(FM_CREW_STATE_OBSERVE_ONLY=1 run_crew_state "$d" observe)
+  assert_contains "$out" "state: unknown" "read-only observation must not accept readiness"
+  assert_contains "$out" "ship completion not verified" "unverified readiness is explicit"
+  [ "$(cat "$d/state/observe.meta")" = "$before" ] || fail "observation changed task metadata"
+  [ ! -e "$d/state/.control-observe.lock" ] || fail "observation claimed control lock"
+  pass "read-only crew observation does not accept or latch local readiness"
+}
+
 # Fleet snapshot hands crew-state a captured meta copy outside state/. The
 # poll's merge marker stays in the live state dir, so a squash-merged PR whose
 # branch fleet sync pruned still reads done there.
@@ -6825,6 +6845,7 @@ test_terminal_run_without_live_sibling_is_unchanged
 test_coarse_run_does_not_probe_other_branch_ci_log_for_ready_status
 test_other_branch_run_ignored
 test_unpushed_ship_done_is_blocked
+test_observation_does_not_latch_local_done
 test_merged_pr_reads_done_under_captured_meta
 test_no_mistakes_prevalidation_done_stays_done
 test_moved_remote_branch_without_named_head_is_blocked

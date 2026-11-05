@@ -310,3 +310,115 @@ export function createCalmWorkingShipSprite(): CalmWorkingShipSprite {
     },
   };
 }
+
+/** Enterprise presentation state is driven by the owning harness, never transcript text. */
+export type CalmEnterpriseState = "working" | "waiting" | "failure";
+export type CalmEnterpriseSprite = CalmWorkingShipSprite & {
+  setState(state: CalmEnterpriseState): void;
+};
+
+// Every glyph is a single terminal cell in the supported renderers.
+const ENTERPRISE = [
+  "                              ▄▄▄▄▄▄▄▄▄",
+  "                       ▄▄▄▄▄██████████████▄▄▄▄",
+  "                      ▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+  "   ▄██████████████▄             ██",
+  "   ▀██████████████▀╲___________██______",
+  "                    ╲  ▄███████████████▶",
+  "   ▄██████████████▄ ╱  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+  "   ▀██████████████▀╱",
+];
+
+// One stable star per broad cell, jittered within it independently for each row.
+// World coordinates move past the viewport, so stars do not flicker between ticks.
+function enterpriseStarVariation(slot: number, row: number): number {
+  let value = (Math.imul(slot, 0x9e3779b1) + Math.imul(row + 1, 0x85ebca6b)) >>> 0;
+  value ^= value >>> 16;
+  value = Math.imul(value, 0x7feb352d) >>> 0;
+  return (value ^ (value >>> 15)) >>> 0;
+}
+
+/** A centered, cell-based scene. Narrow terminals fall back to a small ship. */
+export function createCalmEnterpriseSprite(reducedMotion = false): CalmEnterpriseSprite {
+  let state: CalmEnterpriseState = "waiting";
+  let tick = 0;
+  let transition = 0;
+  let failureAge = 0;
+  return {
+    setState(next) {
+      if (next !== state) transition = reducedMotion ? 0 : 5;
+      if (next !== state && next === "failure") failureAge = 0;
+      state = next;
+    },
+    tick() {
+      if (reducedMotion) return;
+      tick++;
+      if (state === "failure") failureAge++;
+      if (transition > 0) transition--;
+    },
+    frame(width) {
+      width = Math.max(1, Math.floor(width));
+      const art = width >= 48 ? ENTERPRISE : ["   ▄▄", "▄▄███▶", "▀▀▀▀▀"];
+      const artWidth = Math.max(...art.map((row) => Array.from(row).length));
+      if (width < artWidth) return [[{ text: "▶".slice(0, width).padEnd(width), color: "boat" }]];
+      const x = Math.floor((width - artWidth) / 2);
+      const bob = !reducedMotion && state !== "waiting" && Math.floor(tick / 10) % 2 === 1 ? 1 : 0;
+      const rows = art.length + 2;
+      return Array.from({ length: rows }, (_, row) => {
+        const cells = Array.from({ length: width }, () => ({ glyph: " ", color: "plain" as CalmWorkingShipColor }));
+        const speed = transition > 0 && state !== "working" ? 2 : state === "working" ? 3 : 1;
+        const starPhase = reducedMotion ? 0 : Math.floor(tick * speed / (state === "working" ? 1 : 4));
+        const streak = state === "working" && transition === 0;
+        const firstSlot = Math.floor((starPhase - 8) / 29) - 1;
+        const lastSlot = Math.floor((width + starPhase + 8) / 29);
+        for (let slot = firstSlot; slot <= lastSlot; slot++) {
+          const variation = enterpriseStarVariation(slot, row);
+          const start = slot * 29 + (variation % 17) - 8 - starPhase;
+          const length = streak ? 5 + ((variation >>> 8) % 4) : 1;
+          for (let offset = 0; offset < length; offset++) {
+            const column = start + offset;
+            if (column >= 0 && column < width) {
+              cells[column] = { glyph: streak ? "─" : ".", color: "water" };
+            }
+          }
+        }
+        const line = art[row - 1 - bob];
+        if (line !== undefined) {
+          const glyphs = Array.from(line);
+          // Keep a one-cell breathing space around the silhouette before painting it.
+          glyphs.forEach((glyph, column) => {
+            if (glyph === " ") return;
+            for (let offset = -1; offset <= 1; offset++) {
+              const pos = x + column + offset;
+              if (pos >= 0 && pos < width) cells[pos] = { glyph: " ", color: "plain" };
+            }
+          });
+          glyphs.forEach((glyph, column) => {
+            if (glyph !== " " && x + column < width) cells[x + column] = { glyph, color: "boat" };
+          });
+        }
+        // Failure is shown only when a harness supplies a reliable failure outcome.
+        if (state === "failure" && width >= artWidth + 22 && row >= 1 && row <= 3) {
+          const enemy = ["   /\\   ", "<==##==>", "   \\/   "][row - 1];
+          Array.from(enemy).forEach((glyph, column) => {
+            const pos = width - enemy.length - 1 + column + (reducedMotion ? 0 : Math.max(0, 8 - failureAge));
+            if (glyph !== " " && pos >= 0 && pos < width) cells[pos] = { glyph, color: "boat" };
+          });
+        }
+        const runs: CalmWorkingShipRun[] = [];
+        for (const { glyph, color } of cells) {
+          const last = runs[runs.length - 1];
+          if (last?.color === color) runs[runs.length - 1] = { text: last.text + glyph, color };
+          else runs.push({ text: glyph, color });
+        }
+        return runs;
+      });
+    },
+    restoreLastRendered() {},
+    reset() { tick = 0; transition = 0; failureAge = 0; state = "waiting"; },
+    clampToWidth() {},
+    position() { return 0; },
+    direction() { return 1; },
+    waterPhase() { return tick; },
+  };
+}

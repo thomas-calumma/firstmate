@@ -62,8 +62,9 @@ function paintRun(run: CalmWorkingShipRun): string {
   return `${ANSI_FOREGROUND[run.color]}${run.text}${RESET}`;
 }
 
-export function createCalmWorkingShipAnimation(): CalmWorkingShipAnimation {
-  const sprite = createCalmWorkingShipSprite();
+export function createCalmWorkingShipAnimation(
+  sprite: CalmWorkingShipSprite = createCalmWorkingShipSprite(),
+): CalmWorkingShipAnimation {
   return {
     position: sprite.position,
     direction: sprite.direction,

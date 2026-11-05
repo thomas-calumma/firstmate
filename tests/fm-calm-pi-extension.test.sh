@@ -205,6 +205,8 @@ test_home_resolution() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/project/.pi/extensions/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/project/node_modules/@earendil-works/pi-coding-agent"
@@ -330,6 +332,8 @@ test_pi_compat_degraded_adapter() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/project/.pi/extensions/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/project/node_modules/@earendil-works/pi-coding-agent"
@@ -432,6 +436,8 @@ test_pi_compat_missing_adapter_exports() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/project/.pi/extensions/lib/fm-operational-input.ts"
   printf '%s\n' '{"type":"module"}' >"$fixture/project/package.json"
@@ -812,6 +818,8 @@ test_builtin_gate_load_time() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/project/.pi/extensions/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/project/node_modules/@earendil-works/pi-coding-agent"
@@ -901,6 +909,8 @@ test_calm_activation_collision_and_regression_bound() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/project/.pi/extensions/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/project/node_modules/@earendil-works/pi-coding-agent"
@@ -1118,6 +1128,8 @@ test_rendering_and_session_lifecycle() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/lib/fm-calm-working-ship-sprite.ts"
   cp "$ROOT/.pi/extensions/lib/fm-operational-input.ts" "$fixture/lib/fm-operational-input.ts"
   cp "$ROOT/.pi/extensions/lib/fm-branch-dispatch.ts" "$fixture/lib/fm-branch-dispatch.ts"
@@ -1843,6 +1855,8 @@ test_calm_mid_turn_working_notes() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/node_modules/@earendil-works/pi-coding-agent"
@@ -2150,6 +2164,8 @@ test_operational_followup_turn_e2e() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$project/.pi/extensions/lib/fm-operational-input.ts"
   printf '%s\n' '{"followUpMode":"all"}' >"$config/settings.json"
@@ -2519,6 +2535,8 @@ test_queued_operational_escape_e2e() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$project/.pi/extensions/lib/fm-operational-input.ts"
   printf '%s\n' '{"followUpMode":"all"}' >"$config/settings.json"
@@ -2736,6 +2754,8 @@ test_hidden_block_geometry_e2e() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$project/.pi/extensions/lib/fm-operational-input.ts"
   printf '%s\n' on >"$home/config/calm"
@@ -2988,6 +3008,8 @@ test_working_ship_geometry_and_lifecycle() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$fixture/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$fixture/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$fixture/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$fixture/lib/fm-calm-working-ship-sprite.ts"
   cp "$PI_OPERATIONAL_INPUT" "$fixture/lib/fm-operational-input.ts"
   ln -s "$PI_PACKAGE_DIR" "$fixture/node_modules/@earendil-works/pi-coding-agent"
@@ -4077,6 +4099,8 @@ test_interactive_terminal_e2e() {
   cp "$PENDING_OPERATIONAL_LAYOUT" "$project/.pi/extensions/lib/fm-calm-pending-operational-layout.ts"
   cp "$VISIBILITY" "$project/.pi/extensions/lib/fm-calm-visibility.ts"
   cp "$WORKING_SHIP" "$project/.pi/extensions/lib/fm-calm-working-ship.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$project/.pi/extensions/lib/fm-calm-enterprise-pixels.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$project/.pi/extensions/lib/fm-task-panel-composition.ts"
   cp "$WORKING_SHIP_SPRITE" "$project/.pi/extensions/lib/fm-calm-working-ship-sprite.ts"
   cp "$ROOT/.pi/extensions/lib/fm-operational-input.ts" "$project/.pi/extensions/lib/fm-operational-input.ts"
   cp "$ROOT/.pi/extensions/lib/fm-branch-dispatch.ts" "$project/.pi/extensions/lib/fm-branch-dispatch.ts"
@@ -4981,6 +5005,406 @@ JS
   pass "Pi calm native E2E replaces the stock working row with a moving, resize-clamped working ship that freezes and resumes across two working periods in one Pi session, clears on abort, keeps captain turns visible, hides exact operational user rows without changing persistence, restores stock rendering Calm-off, survives restart, and preserves export plus Ctrl+O behavior"
 }
 
+test_enterprise_pixel_scene() {
+  local fixture="$TMP_ROOT/enterprise-pixels"
+  [ -d "$PI_PACKAGE_DIR/node_modules/@earendil-works/pi-tui" ] || { printf 'skip: Pi TUI is unavailable for pixel scene checks\n'; return; }
+  mkdir -p "$fixture/node_modules/@earendil-works"
+  cp "$ROOT/.pi/extensions/lib/fm-calm-enterprise-pixels.ts" "$fixture/scene.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/composition.ts"
+  ln -s "$PI_PACKAGE_DIR/node_modules/@earendil-works/pi-tui" "$fixture/node_modules/@earendil-works/pi-tui"
+  cat > "$fixture/check.mjs" <<'NODE'
+import assert from "node:assert/strict";
+import { inflateSync } from "node:zlib";
+import { createEnterprisePixelScene, createEnterprisePixelWidget } from "./scene.ts";
+import { composeTaskPanel } from "./composition.ts";
+import { setCapabilities, setCellDimensions } from "@earendil-works/pi-tui";
+const scene = createEnterprisePixelScene("enterprise");
+const data = Buffer.from(scene.render(702, 180), "base64");
+assert.equal(data.readUInt32BE(16), 702); assert.equal(data.readUInt32BE(20), 180);
+// Track the ship's red nacelle pixels in the rendered PNG, independent of the starfield.
+function shipCenter(png) {
+  const data=Buffer.from(png,"base64"), width=data.readUInt32BE(16), height=data.readUInt32BE(20), chunks=[];
+  for(let i=8;i<data.length;) { const n=data.readUInt32BE(i); if(data.toString("ascii",i+4,i+8)==="IDAT") chunks.push(data.subarray(i+8,i+8+n)); i+=n+12; }
+  const raw=inflateSync(Buffer.concat(chunks)); let sum=0, count=0;
+  for(let y=0;y<height;y++) for(let x=0;x<width;x++) { const i=y*(width*4+1)+1+x*4; if(raw[i]>150 && raw[i]>raw[i+1]*1.6 && raw[i]>raw[i+2]*1.5) { sum+=x; count++; } }
+  assert(count>10); return sum/count;
+}
+const motion=createEnterprisePixelScene("enterprise"), center=shipCenter(motion.render(702,180));
+motion.setState("working"); for(let i=0;i<8;i++) motion.tick();
+assert(shipCenter(motion.render(702,180))>center+45, "warp entry moves farther right");
+for(let i=0;i<8;i++) motion.tick(); assert(shipCenter(motion.render(702,180))>center+5, "entry still returning after old transition");
+for(let i=0;i<4;i++) motion.tick(); assert(Math.abs(shipCenter(motion.render(702,180))-center)<2, "cruise returns to center");
+motion.setState("waiting"); for(let i=0;i<8;i++) motion.tick();
+assert(shipCenter(motion.render(702,180))<center-35, "warp exit moves farther left");
+for(let i=0;i<8;i++) motion.tick(); assert(shipCenter(motion.render(702,180))<center-5, "exit still returning after old transition");
+for(let i=0;i<4;i++) motion.tick(); assert(Math.abs(shipCenter(motion.render(702,180))-center)<2, "exit returns to center");
+// Decode star runs at logical resolution to exercise entry and viewport clipping.
+function starRuns(png) {
+  const b=Buffer.from(png,"base64"), chunks=[];
+  for(let p=8;p<b.length;) { const n=b.readUInt32BE(p); if(b.toString("ascii",p+4,p+8)==="IDAT") chunks.push(b.subarray(p+8,p+8+n)); p+=n+12; }
+  const raw=inflateSync(Buffer.concat(chunks)), runs=[];
+  for(let y=0;y<80;y++) { let start=-1; for(let x=0;x<=320;x++) {
+    const i=y*1281+1+x*4, star=x<320 && ((raw[i]===82 && raw[i+1]===108 && raw[i+2]===133) || (raw[i]===184 && raw[i+1]===201 && raw[i+2]===206));
+    if(star && start<0) start=x;
+    if(!star && start>=0) { runs.push({y,x:start,len:x-start}); start=-1; }
+  } }
+  return runs;
+}
+const stars=createEnterprisePixelScene("enterprise"); stars.setState("working");
+const frames=[];
+for(let i=0;i<=9;i++) { frames.push(starRuns(stars.render(320,80))); stars.tick(); }
+for(let i=0;i<8;i++) assert(frames[i].every(r=>r.len<=2), `short stars during acceleration at tick ${i}`);
+assert(Math.max(...frames[8].map(r=>r.len))>=45, "streaks appear crisply at hyperspeed");
+// Pick an unobscured star that remains away from both edges across the entry.
+const track=frames[0].find(r=>r.x>100 && r.x<220 && frames.slice(0,8).every(f=>f.filter(s=>s.y===r.y).length===1));
+assert(track, "a single star is trackable throughout acceleration");
+const positions=frames.slice(0,8).map(f=>f.find(r=>r.y===track.y).x);
+assert(positions[0]-positions[1] < positions[6]-positions[7], "short stars accelerate before lengthening");
+function background(png) {
+  const b=Buffer.from(png,"base64"), chunks=[];
+  for(let p=8;p<b.length;) { const n=b.readUInt32BE(p); if(b.toString("ascii",p+4,p+8)==="IDAT") chunks.push(b.subarray(p+8,p+8+n)); p+=n+12; }
+  const raw=inflateSync(Buffer.concat(chunks)); return [...raw.subarray(1,4)];
+}
+const flash=createEnterprisePixelScene("enterprise"); flash.setState("working");
+const backgrounds=[]; for(let i=0;i<=10;i++) { backgrounds.push(background(flash.render(320,80))); flash.tick(); }
+assert.deepEqual(backgrounds[7],[8,12,24]); assert.deepEqual(backgrounds[8],[12,17,31]);
+assert.deepEqual(backgrounds[9],[8,12,24]); assert.deepEqual(backgrounds[10],[8,12,24]);
+// Measure the entire visible artwork, not its asymmetric red nacelle pixels.
+function artworkBounds(png) {
+  const b=Buffer.from(png,"base64"), width=b.readUInt32BE(16), height=b.readUInt32BE(20), chunks=[];
+  for(let p=8;p<b.length;) { const n=b.readUInt32BE(p); if(b.toString("ascii",p+4,p+8)==="IDAT") chunks.push(b.subarray(p+8,p+8+n)); p+=n+12; }
+  const raw=inflateSync(Buffer.concat(chunks)); let min=width,max=-1;
+  for(let y=0;y<height;y++) for(let x=Math.ceil(4*width/320);x<width;x++) {
+    const i=y*(width*4+1)+1+x*4, c=`${raw[i]},${raw[i+1]},${raw[i+2]}`;
+    if(!["8,12,24","82,108,133","184,201,206"].includes(c)) { min=Math.min(min,x); max=Math.max(max,x); }
+  }
+  assert(max>=min); return [min,max];
+}
+for (const width of [432,702,900]) for (const height of [180,216]) {
+  for (const profile of ["enterprise-cage","enterprise","enterprise-phase2","enterprise-refit","enterprise-b"]) {
+    const framed=createEnterprisePixelScene(profile,true);
+    const [min,max]=artworkBounds(framed.render(width,height,true));
+    assert(Math.abs((min+max+1)/2 - (Math.ceil(4*width/320)+width)/2)<1.5, `${profile} centered in ${width}x${height} scene`);
+  }
+}
+const staticScene = createEnterprisePixelScene("enterprise", true);
+const before = staticScene.render(702,180); assert.notEqual(staticScene.render(702,180,true),before); assert.equal(staticScene.render(702,180),before); staticScene.tick(); assert.equal(staticScene.render(702,180),before);
+staticScene.setState("failure"); assert.notEqual(staticScene.render(702,180),before);
+let disposed=0;
+const fallback={render: width => ["F".repeat(width)],tick(){},restoreLastRendered(){disposed++}};
+const widget=createEnterprisePixelWidget({requestRender(){}},scene,fallback,true);
+setCellDimensions({widthPx:9,heightPx:18});
+setCapabilities({images:"kitty",trueColor:true,hyperlinks:true});
+assert(widget.render(80).some(line => line.includes("\x1b_G")));
+assert.equal(widget.render(80).length,12);
+assert.equal(widget.render(40)[0],"F".repeat(40));
+const dimensions=[];
+const actual=createEnterprisePixelScene("enterprise",true);
+const measured={...actual,render(w,h,framed){dimensions.push([w,h,framed]);return actual.render(w,h,framed);}};
+const panelWidget=createEnterprisePixelWidget({requestRender(){}},measured,fallback,true,()=>true);
+const panel={render:(w)=>["TASKS", "A long task title at the boundary".slice(0,w)],quota:()=>["WEEKLY QUOTA"]};
+for(const width of [65,100,160,220]) {
+  const lines=composeTaskPanel(panelWidget,panel,width);
+  assert(lines.some(line=>line.includes("TASKS")));
+  assert(lines.some(line=>line.includes("\x1b_G")));
+}
+assert(dimensions.some(([w,,framed])=>framed && w>78*9), "wide panel uses available image width");
+for(const [w,h] of dimensions) {
+  const [min,max]=artworkBounds(actual.render(w,h,true));
+  assert(Math.abs((min+max+1)/2-(Math.ceil(4*w/320)+w)/2)<1.5, `panel artwork centered at ${w}x${h}`);
+}
+panelWidget.dispose();
+setCapabilities({images:null,trueColor:true,hyperlinks:true});
+assert.equal(widget.render(80)[0],"F".repeat(80));
+widget.dispose(); widget.dispose(); assert.equal(disposed,2); assert.deepEqual(widget.render(80),[]);
+console.log("ok - Enterprise pixel frame dimensions, reduced motion, image fallback, and disposal");
+NODE
+  node "$fixture/check.mjs" || fail "Enterprise pixel scene behavior"
+}
+
+test_task_panel_composition() {
+  local fixture="$TMP_ROOT/task-panel-composition"
+  [ -d "$PI_PACKAGE_DIR/node_modules/@earendil-works/pi-tui" ] || { printf 'skip: Pi TUI is unavailable for panel checks\n'; return; }
+  mkdir -p "$fixture/node_modules/@earendil-works"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/composition.ts"
+  ln -s "$PI_PACKAGE_DIR/node_modules/@earendil-works/pi-tui" "$fixture/node_modules/@earendil-works/pi-tui"
+  cat > "$fixture/check.mjs" <<'NODE'
+import assert from "node:assert/strict";
+import { composeTaskPanel } from "./composition.ts";
+import { visibleWidth } from "@earendil-works/pi-tui";
+const panel={narrow:false,render:(width,rows)=>Array.from({length:rows},(_,i)=>`🟢 Task ${i} 海`)};
+const kitty="\x1b_Ga=T,C=1;QUJD\x1b\\";
+const sixel="\x1b[9A\x1bPqabc\x1b\\";
+for (const sequence of [kitty,sixel]) {
+  const lines=Array(10).fill(""); lines[sequence===kitty?0:9]=sequence;
+  const widget={render:()=>lines,invalidate(){}};
+  const rendered=composeTaskPanel(widget,panel,120);
+  assert.equal(rendered.length,11);
+  assert.equal(rendered[sequence===kitty?1:10],sequence);
+  assert(rendered[2].includes("Task 0"));
+  for (const line of rendered.slice(2,10)) assert(visibleWidth(line)<=120);
+  assert(composeTaskPanel(widget,panel,65).includes(sequence));
+  panel.narrow=true;
+  assert(composeTaskPanel(widget,panel,65).some(line=>line.includes("Task 0")));
+  for (const width of [1,2,3,8,16,65]) for (const line of composeTaskPanel(widget,panel,width)) assert(visibleWidth(line)<=width, `narrow width ${width}`);
+  panel.narrow=false;
+}
+const fallback={render:w=>["x".repeat(w),"y".repeat(w),"z".repeat(w)],invalidate(){}};
+assert.equal(composeTaskPanel(fallback,panel,100).length,9);
+assert(composeTaskPanel(fallback,panel,100).some(line=>line.includes("Task 0")));
+const extended={render:(w,n)=>Array.from({length:n},(_,i)=>`Long title 海 ${i}`),quota:()=>["QUOTA","codex weekly: 68% left","Reset: unavailable","kimi session: 85.02% left","Reset: unavailable","kimi monthly: 99.18% left","Reset: unavailable"]};
+for (const width of [20,65,76,100,125,126,160,220]) {
+ const rendered=composeTaskPanel(fallback,extended,width);
+ for(const line of rendered) assert(visibleWidth(line)<=width, `responsive width ${width}`);
+ assert.equal(rendered.filter(line=>line.includes("QUOTA")).length,1);
+ assert(!rendered.some(line=>line.includes("WEEKLY QUOTA")));
+}
+process.env.NO_COLOR="1";
+assert(!composeTaskPanel(fallback,extended,160).some(line=>line.includes("\x1b[")));
+delete process.env.NO_COLOR;
+console.log("ok - task panel preserves image rows, width and fallback geometry");
+NODE
+  node "$fixture/check.mjs" || fail "task panel composition"
+}
+
+test_task_panel_lifecycle() {
+  local fixture="$TMP_ROOT/task-panel-lifecycle"
+  mkdir -p "$fixture/.pi/extensions/lib" "$fixture/bin" "$fixture/home/state" "$fixture/home/data" "$fixture/home/config" "$fixture/node_modules/@earendil-works"
+  cp "$ROOT/.pi/extensions/fm-task-panel.ts" "$fixture/.pi/extensions/fm-task-panel.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-panel-attention.ts" "$fixture/.pi/extensions/lib/fm-panel-attention.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-enterprise-whistle.ts" "$fixture/.pi/extensions/lib/fm-enterprise-whistle.ts"
+  cp "$ROOT/.pi/extensions/lib/tos-intercom-whistle.mp3" "$fixture/.pi/extensions/lib/tos-intercom-whistle.mp3"
+  cp "$ROOT/.pi/extensions/lib/fm-task-panel-composition.ts" "$fixture/.pi/extensions/lib/fm-task-panel-composition.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-panel-quota.ts" "$fixture/.pi/extensions/lib/fm-panel-quota.ts"
+  ln -s "$PI_PACKAGE_DIR/node_modules/@earendil-works/pi-tui" "$fixture/node_modules/@earendil-works/pi-tui"
+  ln -s "$PI_PACKAGE_DIR" "$fixture/node_modules/@earendil-works/pi-coding-agent"
+  ln -s "$PI_PACKAGE_DIR/node_modules/typebox" "$fixture/node_modules/typebox"
+  cat > "$fixture/bin/fm-fleet-snapshot.sh" <<'SH'
+#!/usr/bin/env bash
+cat "$FM_HOME/sample.json"
+SH
+  cat > "$fixture/check.mjs" <<'NODE'
+import assert from "node:assert/strict";
+import { writeFileSync } from "node:fs";
+const home=process.env.FM_HOME;
+writeFileSync(`${home}/config/calm-ship`,"enterprise\n");
+const task=(title,state="unknown",event="working: previous")=>({kind:"ship",backlog:{title,state:"in_flight"},current_state:{state,source:"none"},hints:{last_event_text:event}});
+const tasks=[task('Active \u001b[31m "quoted"'),task("Waiting", "unknown", "paused: external"),task("Decision"),task("Failure","unknown","failed: error"),...Array.from({length:8},(_,i)=>task(`Overflow ${i}`)),task("Completed")];
+tasks[2].id="historical-question"; tasks[2].spawn_gen="old"; tasks[2].hints.open_decisions=[{key:"old",verb:"needs-decision",summary:"Historical question"}];
+tasks[4].id="historical-failure"; tasks[4].spawn_gen="old"; tasks[4].current_state={state:"failed",source:"status-log"};
+tasks[2].hints.pending_decision=true; tasks[3].current_state={state:"working",source:"pane"};
+tasks[4].hints.last_event_text="failed: error"; tasks[5].hints.last_event_text=""; tasks.at(-1).backlog.state="done";
+tasks.push({kind:"secondmate",current_state:{state:"unknown"},hints:{open_decisions:[]}});
+writeFileSync(`${home}/sample.json`,JSON.stringify({schema:"fm-fleet-local-tasks.v1",fm_home:home,tasks}));
+const cp = await import("node:child_process");
+const { syncBuiltinESMExports } = await import("node:module");
+const { EventEmitter } = await import("node:events");
+const nativeSpawn = cp.default.spawn;
+const audio=[];
+cp.default.spawn=(file,args,options)=>{
+ if(file!=="/usr/bin/afplay") return nativeSpawn(file,args,options);
+ const player=new EventEmitter(); player.kill=()=>{queueMicrotask(()=>player.emit("close",null));return true;};
+ audio.push(player); return player;
+};
+syncBuiltinESMExports();
+let panel; const callbacks={},commands={},tools={},entries=[];
+const pi={events:{emit(_key,value){panel=value;}},on(name,fn){callbacks[name]=fn;},registerCommand(name,value){commands[name]=value;},registerTool(tool){tools[tool.name]=tool;},registerEntryRenderer(){},appendEntry(customType,data){entries.push({type:"custom",customType,data});}};
+const {default: install}=await import("./.pi/extensions/fm-task-panel.ts"); install(pi);
+callbacks.session_start({}, {mode:"tui"}); const run=(arg)=>commands["fleet-panel"].handler(arg,{ui:{notify(){}}});
+await run("on");
+for(let i=0;i<100 && (!panel || panel.render(100,8)[0].includes("Loading"));i++) await new Promise(r=>setTimeout(r,20));
+let lines=panel.render(100,8); assert(lines[0].includes("12 open"));
+assert.equal(audio.length,0,"first snapshot replayed historical attention");
+assert(lines.join(" ").includes("⚪ reported working")); assert(lines.join(" ").includes("⏳ reported paused"));
+assert(lines.join(" ").includes("❓ decision needed")); assert(lines.join(" ").includes("🟢 last seen working"));
+assert(lines.join(" ").includes("🔴 reported failed")); assert(lines.join(" ").includes("⚪ unknown")); assert(!lines.join(" ").includes("\x1b[31m"));
+await run("next"); lines=panel.render(100,8); assert(lines.join(" ").includes("Overflow 7"));
+assert(!lines.join(" ").includes("Completed"));
+writeFileSync(`${home}/sample.json`,JSON.stringify({schema:"fm-fleet-local-tasks.v1",fm_home:home,tasks:[task("First segment of a deliberately long task title with several more words to carry across multiple lines and pages FINALMARKER")]}));
+await run("refresh");
+for(let i=0;i<100 && !panel.render(24,4)[0].includes("1 open");i++) await new Promise(r=>setTimeout(r,20));
+await run("prev"); await run("prev");
+let recovered=""; for(let i=0;i<8;i++) { recovered += panel.render(24,4).slice(1).join(" ")+" "; await run("next"); }
+assert(recovered.includes("First segment")); assert(recovered.includes("FINALMARKER"));
+// Exercise the real snapshot-to-playback boundary without audible subprocesses.
+const snapshot=tasks=>({schema:"fm-fleet-local-tasks.v1",fm_home:home,tasks});
+let sequence=0;
+const observe=async(tasks)=>{
+ const marker=`Observation ${++sequence}`;
+ writeFileSync(`${home}/sample.json`,JSON.stringify(snapshot([...tasks,task(marker)])));
+ await run("refresh"); await run("prev");
+ for(let i=0;i<100;i++) {
+  if(panel.render(1000,100).join(" ").includes(marker)) return;
+  await new Promise(r=>setTimeout(r,20));
+ }
+ throw Error("snapshot did not refresh");
+};
+const gate={id:"new-gate",spawn_gen:"one",kind:"ship",backlog:{title:"Question",state:"in_flight"},current_state:{state:"parked",source:"pane"},hints:{open_decisions:[{key:"choice",verb:"needs-decision",summary:"Choose"}]}};
+await observe([gate,{...gate,id:"second-gate"}]);
+assert.equal(audio.length,0,"worker decisions must reach MAIN before user attention");
+const ctx={sessionManager:{getEntries:()=>entries}};
+const deliver=(key,kind="question",revision="1")=>tools.fm_attention.execute("test",{key,kind,revision,message:`Visible ${kind} ${key}`},undefined,undefined,ctx);
+await run("off"); assert.equal(panel,undefined);
+await deliver("panel-hidden");
+if(process.platform==="darwin") { assert.equal(audio.length,1); audio.at(-1).emit("close",0); }
+await deliver("panel-hidden"); assert.equal(entries.length,1);
+await run("mute"); await deliver("muted");
+await run("unmute"); await deliver("muted"); assert.equal(audio.length,process.platform==="darwin"?1:0);
+await run("on"); await run("off");
+await deliver("result","completed");
+if(process.platform==="darwin") { assert.equal(audio.length,2); audio.at(-1).emit("close",0); }
+await run("mute"); await run("on"); await run("off"); await deliver("muted-after-off-on");
+assert.equal(audio.length,process.platform==="darwin"?2:0,"mute lost across panel off/on");
+callbacks.session_shutdown(); callbacks.session_start({}, {mode:"json"});
+await deliver("json-new"); assert.equal(audio.length,process.platform==="darwin"?2:0,"noninteractive audio started");
+callbacks.session_shutdown(); callbacks.session_start({}, {mode:"tui"});
+await deliver("next-session-default-enabled");
+assert.equal(audio.length,process.platform==="darwin"?3:0,"session start failed to reset mute");
+callbacks.session_shutdown(); // Keep the audio stub installed until this fixture exits.
+console.log("ok - task panel titles, states, paging and lifecycle");
+NODE
+  FM_HOME="$fixture/home" node "$fixture/check.mjs" || fail "task panel lifecycle"
+}
+
+test_panel_quota_boundary() {
+  local fixture="$TMP_ROOT/panel-quota"
+  mkdir -p "$fixture/config"
+  cp "$ROOT/.pi/extensions/lib/fm-panel-quota.ts" "$fixture/quota.ts"
+  cat > "$fixture/check.mjs" <<'NODE'
+import assert from "node:assert/strict";
+import { writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { selectedQuotaProviders, quotaRows, quotaLines, resetDuration } from "./quota.ts";
+const configDir=fileURLToPath(new URL("./config",import.meta.url));
+const panelConfig=`${configDir}/quota-panel-providers`;
+assert.deepEqual(selectedQuotaProviders({default:{provider:"codex"}},configDir),["codex"]);
+assert.deepEqual(selectedQuotaProviders({default:{provider:"muse"}},configDir),[]);
+assert.deepEqual(selectedQuotaProviders({default:{model:"codex"}},configDir),[]);
+writeFileSync(panelConfig,"codex\nkimi\n");
+assert.deepEqual(selectedQuotaProviders({default:{provider:"claude"},rules:[{provider:"muse"}]},configDir),["codex","kimi"]);
+writeFileSync(panelConfig," kimi \nunknown\nmuse\ncodex\nkimi\nclaude\n");
+assert.deepEqual(selectedQuotaProviders({default:{provider:"claude"}},configDir),["kimi","codex"]);
+writeFileSync(panelConfig,"not a provider\n{m malformed\n");
+assert.deepEqual(selectedQuotaProviders({default:{provider:"codex"}},configDir),[]);
+writeFileSync(panelConfig,"");
+assert.deepEqual(selectedQuotaProviders({default:{provider:"codex"}},configDir),[]);
+const row=(provider, windows, state={status:"fresh",stale:false})=>({provider, windows, state});
+const week={kind:"weekly",percentRemaining:68,resetsAt:"2026-11-02T09:00:00.000Z"};
+const session={kind:"session",percentRemaining:85.02,resetsAt:"2026-11-05T17:12:11.000Z"};
+const month={kind:"monthly",percentRemaining:99.18,resetsAt:"2026-12-06T00:00:00.000Z"};
+const monthCode={...month,kind:"monthly",percentRemaining:undefined,percentUsed:0.82,shareOf:"month_total"};
+const data={schemaVersion:5,providers:[row("codex",[week]),row("claude",[{kind:"weekly",percentRemaining:31}]),row("muse",[week])]};
+assert.deepEqual(quotaRows(data,["codex"]),[{provider:"codex",kind:"weekly",remaining:68,resetAt:Date.parse(week.resetsAt)}]);
+const mixed={schemaVersion:5,providers:[row("codex",[week]),row("kimi",[session,month,monthCode])]};
+const mixedRows=quotaRows(mixed,["codex","kimi"]);
+assert.deepEqual(mixedRows,[
+ {provider:"codex",kind:"weekly",remaining:68,resetAt:Date.parse(week.resetsAt)},
+ {provider:"kimi",kind:"session",remaining:85.02,resetAt:Date.parse(session.resetsAt)},
+ {provider:"kimi",kind:"monthly",remaining:99.18,resetAt:Date.parse(month.resetsAt)},
+]);
+assert.deepEqual(quotaLines(mixedRows.map(({resetAt,...row})=>row)),[
+ "codex weekly: 68% left","Reset: unavailable",
+ "kimi session: 85.02% left","Reset: unavailable",
+ "kimi monthly: 99.18% left","Reset: unavailable",
+]);
+assert(!quotaLines(mixedRows).some(line=>line.includes("month_code")||line.includes("184.2")));
+assert.deepEqual(quotaLines([]),["Quota unavailable"]);
+const now=Date.parse("2026-10-26T07:00:00Z");
+assert.equal(resetDuration(quotaRows(data,["codex"])[0].resetAt,now),"in 7 days, 2 hours");
+assert.equal(resetDuration(now+61*60000,now),"in 1 hour, 1 minute");
+assert.equal(resetDuration(now+1000,now),"in 1 minute");
+assert.equal(resetDuration(undefined,now),undefined);
+assert.equal(resetDuration(now,now),undefined);
+assert.equal(resetDuration(now-1,now),undefined);
+assert.deepEqual(quotaRows(data,["codex","claude"]).map(x=>x.provider),["codex","claude"]);
+assert.deepEqual(quotaRows(data,["muse"]),[]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("codex",[week],{status:"fresh",stale:false,authStatus:"unusable"})]},["codex"]),[]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("codex",[week],{status:"stale",stale:true,authStatus:"usable"})]},["codex"]),[{provider:"codex",kind:"weekly"}]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("codex",[week,week])]},["codex"]),[{provider:"codex",kind:"weekly"}]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("kimi",[month,month])]},["kimi"]),[{provider:"kimi",kind:"monthly"}]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("kimi",[{...session,percentRemaining:101,resetsAt:"invalid"}])]},["kimi"]),[{provider:"kimi",kind:"session"}]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[row("codex",[{kind:"daily",percentRemaining:1}])]},["codex"]),[{provider:"codex"}]);
+assert.deepEqual(quotaRows({schemaVersion:5,providers:[{...row("codex",[week]),notSetUp:true}]},["codex"]),[]);
+console.log("ok - explicit panel providers and weekly/session/monthly quota evidence boundary");
+NODE
+  node "$fixture/check.mjs" || fail "quota boundary"
+}
+
+test_panel_attention_sound() {
+  local fixture="$TMP_ROOT/panel-attention"
+  mkdir -p "$fixture"
+  cp "$ROOT/.pi/extensions/lib/fm-panel-attention.ts" "$fixture/attention.ts"
+  cp "$ROOT/.pi/extensions/lib/fm-enterprise-whistle.ts" "$fixture/whistle.ts"
+  cp "$ROOT/.pi/extensions/lib/tos-intercom-whistle.mp3" "$fixture/tos-intercom-whistle.mp3"
+  cat > "$fixture/check.mjs" <<'NODE'
+import assert from "node:assert/strict";
+import { EventEmitter } from "node:events";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { attentionIdentity } from "./attention.ts";
+import { EnterpriseWhistlePlayer } from "./whistle.ts";
+const delivery={key:"task/choice",kind:"question",revision:"episode-1",message:"Choose one"};
+assert.equal(attentionIdentity(delivery),attentionIdentity({...delivery,message:"Reworded reminder"}));
+for(const change of [{key:"task/other"},{kind:"completed"},{revision:"episode-2"}]) assert.notEqual(attentionIdentity(delivery),attentionIdentity({...delivery,...change}));
+for(const invalid of [null,{}, {...delivery,key:" "},{...delivery,revision:""},{...delivery,kind:"working"},{...delivery,message:""}]) assert.equal(attentionIdentity(invalid),undefined);
+const sample=readFileSync(new URL("./tos-intercom-whistle.mp3",import.meta.url));
+assert.equal(sample.length,56673);
+assert.equal(sample.toString("ascii",0,3),"ID3");
+assert.equal(createHash("sha256").update(sample).digest("hex"),"416b9210e362d8d4b4ba246983d566121ee8e140debfae3f44d148857f64e043");
+
+// No test invokes an actual host audio executable.
+const spawned=[]; let active=0,maxActive=0;
+function spawn(file,args,options) {
+ assert.equal(file,"/usr/bin/afplay"); assert.equal(args.length,1);
+ assert.equal(options.shell,false); assert.equal(options.stdio,"ignore");
+ assert(readFileSync(args[0]).equals(sample));
+ const child=new EventEmitter(); child.path=args[0]; child.killed=0;
+ active++; maxActive=Math.max(maxActive,active);
+ child.kill=signal=>{assert.equal(signal,"SIGKILL"); child.killed++; return true;};
+ child.once("close",()=>{active--;}); spawned.push(child); return child;
+}
+const player=new EnterpriseWhistlePlayer({platform:"darwin",spawn});
+player.setMuted(true); player.request(); assert.equal(spawned.length,0);
+player.setMuted(false); player.request(); assert.equal(spawned.length,1);
+for(let i=0;i<500;i++) player.request(); assert.equal(spawned.length,1);
+spawned[0].emit("close",0); assert.equal(spawned.length,2,"burst not coalesced to one follow-up");
+spawned[1].emit("close",0); assert.equal(spawned.length,2); assert.equal(maxActive,1);
+player.request(); assert.equal(spawned.length,3);
+player.setMuted(true); assert.equal(spawned[2].killed,1);
+player.setMuted(false); player.request(); assert.equal(spawned.length,3,"mute released occupied slot too soon");
+spawned[2].emit("close",null); assert.equal(spawned.length,4,"intentional cancellation disabled player");
+player.dispose(); player.dispose(); assert(spawned[3].killed>=1);
+spawned[3].emit("close",null); player.request(); assert.equal(spawned.length,4,"disposed player restarted");
+const unsupported=new EnterpriseWhistlePlayer({platform:"linux",spawn}); unsupported.request(); unsupported.dispose(); assert.equal(spawned.length,4);
+const missing=new EnterpriseWhistlePlayer({platform:"darwin",spawn:()=>{throw Error("missing player");}});
+missing.request(); missing.request(); missing.dispose();
+for(const event of ["error","close"]) {
+ const failed=new EnterpriseWhistlePlayer({platform:"darwin",spawn}); failed.request(); const count=spawned.length;
+ if(event==="error") spawned.at(-1).emit("error",Error("ENOENT"));
+ spawned.at(-1).emit("close",1); failed.request(); assert.equal(spawned.length,count,"failed player retried"); failed.dispose();
+}
+// Drive the watchdog deterministically rather than sleeping or making sound.
+const nativeSet=globalThis.setTimeout,nativeClear=globalThis.clearTimeout;
+let watchdog,clears=0;
+globalThis.setTimeout=(fn,delay)=>{assert.equal(delay,3000);watchdog=fn;return {unref(){}};};
+globalThis.clearTimeout=()=>{clears++;};
+try {
+ const stuck=new EnterpriseWhistlePlayer({platform:"darwin",spawn}); stuck.request(); stuck.request();
+ const current=spawned.at(-1),count=spawned.length; watchdog(); assert.equal(current.killed,1);
+ stuck.request(); assert.equal(spawned.length,count); current.emit("close",null); stuck.request(); assert.equal(spawned.length,count); stuck.dispose(); assert(clears>0);
+} finally { globalThis.setTimeout=nativeSet; globalThis.clearTimeout=nativeClear; }
+assert.equal(active,0);
+console.log("ok - delivery identities, mute, failures, bounded playback and disposal");
+NODE
+  node "$fixture/check.mjs" || fail "panel attention sound"
+}
+
+test_panel_attention_sound
+node "$ROOT/tests/fixtures/fm-attention-sdk.mjs" "$PI_PACKAGE_DIR" "$TMP_ROOT/attention-sdk" "$ROOT" || fail "real SDK attention delivery"
+test_panel_quota_boundary
+test_enterprise_pixel_scene
+test_task_panel_composition
+test_task_panel_lifecycle
 test_home_resolution
 test_pi_compat_no_upper_bound
 test_pi_compat_degraded_adapter

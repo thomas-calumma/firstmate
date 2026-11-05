@@ -58,6 +58,9 @@ import {
   createCalmWorkingShipAnimation,
   createCalmWorkingShipWidget,
 } from "./lib/fm-calm-working-ship.ts";
+import { createCalmEnterpriseSprite } from "./lib/fm-calm-working-ship-sprite.ts";
+import { createEnterprisePixelScene, createEnterprisePixelWidget, type EnterpriseProfile } from "./lib/fm-calm-enterprise-pixels.ts";
+import { composeTaskPanel, TASK_PANEL_EVENT, type TaskPanel } from "./lib/fm-task-panel-composition.ts";
 import {
   calmPresentationHides,
   calmPresentationIsActive,
@@ -139,7 +142,20 @@ export default function (pi: ExtensionAPI) {
   // One animation instance per extension lifetime. Hiding the working widget freezes
   // this state; the next working period resumes it. session_start resets it so a fresh
   // Pi session starts at the normal initial position. Never module-global.
+  const reducedMotion = process.env.FM_CALM_REDUCED_MOTION === "1";
+  const enterpriseSprite = createCalmEnterpriseSprite(reducedMotion);
+  let enterprisePixels = createEnterprisePixelScene("enterprise", reducedMotion);
   const workingShipAnimation = createCalmWorkingShipAnimation();
+  const enterpriseAnimation = createCalmWorkingShipAnimation(enterpriseSprite);
+  let enterprise = false;
+  let lastRunFailed = false;
+  let requestEnterpriseRender: (() => void) | undefined;
+  let taskPanel: TaskPanel | undefined;
+  pi.events.on(TASK_PANEL_EVENT, (value) => {
+    taskPanel = value && typeof value === "object" && typeof (value as TaskPanel).render === "function"
+      ? value as TaskPanel : undefined;
+    requestEnterpriseRender?.();
+  });
 
   // Single owner of Calm's working-row presentation choice. The widget is only created
   // or removed on a real transition, so repeated starts cannot duplicate its timer.
@@ -149,16 +165,33 @@ export default function (pi: ExtensionAPI) {
     ui: ExtensionUIContext,
     forceStockVisibility = false,
   ): void => {
-    const showShip = agentRunActive && calmPresentationIsActive();
+    const showShip = calmPresentationIsActive() && (agentRunActive || enterprise);
+    if (enterprise) {
+      const state = agentRunActive ? "working" : lastRunFailed ? "failure" : "waiting";
+      enterpriseSprite.setState(state);
+      const before = enterprisePixels.revision;
+      enterprisePixels.setState(state);
+      if (enterprisePixels.revision !== before) requestEnterpriseRender?.();
+    }
     if (showShip !== workingShipShown) {
       workingShipShown = showShip;
       if (showShip) {
         ui.setWidget(CALM_WORKING_SHIP_WIDGET_KEY, (tui) => {
           workingShipWidgetDisposed = false;
-          const widget = createCalmWorkingShipWidget(tui, workingShipAnimation);
+          if (enterprise) requestEnterpriseRender = () => tui.requestRender();
+          const widget = enterprise
+            ? createEnterprisePixelWidget(tui, enterprisePixels, enterpriseAnimation, reducedMotion, () => !!taskPanel)
+            : createCalmWorkingShipWidget(tui, workingShipAnimation);
+          if (enterprise) {
+            const renderShip = widget.render.bind(widget);
+            widget.render = (width) => taskPanel
+              ? composeTaskPanel({ render: renderShip, invalidate: () => {} }, taskPanel, width, agentRunActive ? "Exploring new worlds" : lastRunFailed ? "Error" : "Standing by")
+              : renderShip(width);
+          }
           const dispose = widget.dispose;
           widget.dispose = () => {
             workingShipWidgetDisposed = true;
+            requestEnterpriseRender = undefined;
             dispose();
           };
           return widget;
@@ -430,6 +463,15 @@ export default function (pi: ExtensionAPI) {
     calmToolRowRepaints.clear();
     exportRendering = false;
     setCalmPresentation(loadCalmPreference());
+    let shipChoice = "";
+    try { shipChoice = readFileSync(resolve(configDirectory, "calm-ship"), "utf8").trim(); }
+    catch { /* Missing preference uses the stock sailboat. */ }
+    const profiles: EnterpriseProfile[] = ["enterprise-cage", "enterprise", "enterprise-phase2", "enterprise-refit", "enterprise-b"];
+    enterprise = profiles.includes(shipChoice as EnterpriseProfile);
+    enterprisePixels = createEnterprisePixelScene(enterprise ? shipChoice as EnterpriseProfile : "enterprise", reducedMotion);
+    lastRunFailed = false;
+    enterpriseSprite.reset();
+    enterprisePixels.reset();
     setCalmStockExportRendering(false);
     publishPresentationState();
     agentRunActive = false;
@@ -476,8 +518,14 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("agent_start", (_event, ctx) => {
+    lastRunFailed = false;
     agentRunActive = true;
     applyWorkingPresentation(ctx.ui);
+  });
+
+  pi.on("agent_end", (event) => {
+    const last = [...event.messages].reverse().find((message) => message.role === "assistant");
+    lastRunFailed = last?.role === "assistant" && last.stopReason === "error";
   });
 
   // agent_settled is emitted from a finally block, so it also covers abort and failure.
@@ -488,6 +536,7 @@ export default function (pi: ExtensionAPI) {
 
   pi.on("session_shutdown", (_event, ctx) => {
     agentRunActive = false;
+    enterprise = false;
     applyWorkingPresentation(ctx.ui);
   });
 

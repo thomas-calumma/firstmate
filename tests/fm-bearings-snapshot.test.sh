@@ -3452,9 +3452,31 @@ test_supplied_secondmate_questions_and_legacy_optional_fields() {
   pass "supplied secondmate questions preserve text with missing optional fields"
 }
 
+test_local_tasks_is_observational_and_folds_decisions() {
+  local home fakebin json before after
+  home=$(make_home panel-local)
+  fakebin=$(make_fakebin "$home")
+  write_fixture "$home"
+  before=$(cat "$home/state/ship-task.meta")
+  json=$(PATH="$fakebin:$PATH" FM_HOME="$home" NET_LOG="$home/net.log" \
+    "$ROOT/bin/fm-fleet-snapshot.sh" --local-tasks) || fail "local task projection failed"
+  after=$(cat "$home/state/ship-task.meta")
+  [ "$before" = "$after" ] || fail "local task projection mutated metadata"
+  [ ! -e "$home/net.log" ] || fail "local task projection invoked a network command"
+  [ ! -e "$home/state/secondmate-summary-cache" ] || fail "local projection created secondmate cache"
+  printf '%s' "$json" | jq -e '
+    .schema == "fm-fleet-local-tasks.v1"
+    and ([.tasks[] | select(.id == "ship-task" and .backlog.title == "Ship the thing")] | length) == 1
+    and ([.tasks[] | select(.id == "mate" and .current_state.state == "unknown" and .hints.pending_decision == true)] | length) == 1
+    and ([.tasks[] | select(.id == "mate" and .paths.home.present == null)] | length) == 1
+  ' >/dev/null || fail "local task projection lost title or decision: $json"
+  pass "local task projection keeps direct-report decisions without collecting secondmate homes"
+}
+
 fm_test_run \
   test_full_captain_questions_survive_local_and_secondmate_projection \
   test_supplied_secondmate_questions_and_legacy_optional_fields \
+  test_local_tasks_is_observational_and_folds_decisions \
   test_task_teardown_during_metadata_capture_does_not_abort_snapshot \
   test_current_state_uses_captured_status_observation \
   test_relaunched_task_does_not_inherit_reused_endpoint_state \

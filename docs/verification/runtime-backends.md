@@ -3539,6 +3539,28 @@ On 2.0.22 the brief is submitted on its own, yet the composer still reads pendin
 `opencode debug config` on 2.0.11 normalized the launch's legacy `{"permission":{"*":"allow"}}` into an allow-all `permissions` rule; the same command printed no configuration on 2.0.22, so on 2.0.22 the legacy shape rests on the earlier 2.0.21 verification recorded in the OpenCode harness reference.
 `tests/fm-spawn-dispatch-profile.test.sh` pins the gate's outcomes portably: an auto-submitted brief gets no extra Enter, a prefilled brief gets exactly one, a composer that reads unknown before it draws gets its one Enter only once it reads pending, a composer that only reads unknown gets its one Enter at the submit deadline, and a turn that never starts fails the spawn.
 
+## Pi Enterprise attention delivery
+
+Verified on 2026-11-02 UTC on macOS arm64 with Node 26.13.0, TypeScript 5.9.3 and the pinned Pi 1.1.0, 1.2.0 and 1.4.0 SDK matrix.
+The operator contract is owned by [Calm's optional Pi task panel](../calm.md#optional-pi-task-panel).
+The non-live fixture loads the production extension with the real SDK and sends synthetic provider tool calls through user prompts and hidden branch-processing messages.
+It verifies native visible-entry rendering before playback requests, durable delivery identities, replay suppression, routine and internal-event silence, rapid distinct events, mute, unavailable players, headless silence and the stock silent default.
+Audio is stubbed for the entire fixture lifetime, every intercepted request is timestamped, and no provider request leaves the process.
+The matrix also passed with macOS `sandbox-exec` denying execution of `/usr/bin/afplay` as an independent containment check.
+
+```sh
+bash tests/fm-pi-primary-types.test.sh
+ok - tracked Pi extensions pass strict no-emit typecheck against Pi 1.1.0
+ok - attention delivery real SDK against Pi 1.1.0
+ok - tracked Pi extensions pass strict no-emit typecheck against Pi 1.2.0
+ok - attention delivery real SDK against Pi 1.2.0
+ok - tracked Pi extensions pass strict no-emit typecheck against Pi 1.4.0
+ok - attention delivery real SDK against Pi 1.4.0
+```
+
+This proves delivery plumbing under explicit synthetic semantic decisions, not spontaneous model selection, an active primary reload, physical terminal rendering or automatic audible acceptance.
+Other harnesses and runtime backend lifecycle paths have no integration with this Pi-local delivery tool.
+
 ## Pi repeated-read containment
 
 Verified on 2026-10-27 UTC on Linux x86_64 with Node 24.22.1 and npm 11.19.1.

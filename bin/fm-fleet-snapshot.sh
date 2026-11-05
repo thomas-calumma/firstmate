@@ -115,6 +115,8 @@
 #   contributions: cached owned-contribution coverage; fm-contributions.sh owns it.
 #   secondmate_guidance: return-channel action note for renderers and bearings.
 #
+# --local-tasks prints local direct-report observations and backlog only, without
+# secondmate-home collection, contributions, or cross-home reads.
 # --contribution-input prints only the canonical backlog/tasks ownership pair,
 # without worker observations or cross-home collection, for the home-local poll.
 # Compatibility: JSON is the primary machine-readable surface.
@@ -236,11 +238,17 @@ esac
 usage() {
   cat <<'EOF'
 usage: fm-fleet-snapshot.sh --json
+       fm-fleet-snapshot.sh --local-tasks
        fm-fleet-snapshot.sh --secondmate-home-summary
 
 Print a structured snapshot of the firstmate fleet.
 JSON is the stable machine-readable output contract. The default snapshot
 refreshes only its parent-side remote-summary cache as an observational side effect.
+
+--local-tasks emits only local direct-report observations and backlog, without
+secondmate-home collection, contributions, or remote-summary cache writes.
+Ship completion is never accepted or latched by this mode.
+It skips forge observations.
 
 --contribution-input emits the canonical local backlog/tasks ownership pair only,
 without worker observations or cross-home collection.
@@ -294,6 +302,7 @@ case "${1:---json}" in
   --json) ;;
   --secondmate-home-summary) OUTPUT_MODE=secondmate-home-summary ;;
   --contribution-input) OUTPUT_MODE=contribution-input ;;
+  --local-tasks) OUTPUT_MODE=local-tasks ;;
   -h|--help) usage; exit 0 ;;
   *) usage >&2; exit 2 ;;
 esac
@@ -324,7 +333,8 @@ last_nonempty_line() {  # <file>
 # snapshot without limit. Remote secondmate endpoint liveness is never read here.
 # A local read that hits the bound folds to state unknown.
 crew_state_json() {  # <id> [<captured-meta>] [<captured-status>]
-  local id=$1 captured_meta=${2:-} captured_status=${3:-} raw rest state source detail sep
+  local id=$1 captured_meta=${2:-} captured_status=${3:-} raw rest state source detail sep observe=0 no_forge=${FM_CREW_STATE_NO_FORGE:-0}
+  if [ "$OUTPUT_MODE" = local-tasks ]; then observe=1; no_forge=1; fi
   raw=$(
     fm_run_timed "$FM_SNAPSHOT_CREW_STATE_TIMEOUT" \
       env FM_ROOT_OVERRIDE="$FM_ROOT" \
@@ -332,6 +342,8 @@ crew_state_json() {  # <id> [<captured-meta>] [<captured-status>]
       FM_STATE_OVERRIDE="$STATE" \
       FM_CREW_STATE_META_OVERRIDE="$captured_meta" \
       FM_CREW_STATE_STATUS_OVERRIDE="$captured_status" \
+      FM_CREW_STATE_OBSERVE_ONLY="$observe" \
+      FM_CREW_STATE_NO_FORGE="$no_forge" \
       FM_DATA_OVERRIDE="$DATA" \
       FM_PROJECTS_OVERRIDE="$PROJECTS" \
       FM_CONFIG_OVERRIDE="$CONFIG" \
@@ -650,7 +662,10 @@ prefetch_task_observations() {  # <meta> <id>
     snapshot_mark_optional_present "$report_path" "$report_capture" || current_rc=1
   fi
 
-  if [ -n "$remote_host" ]; then
+  if [ "$OUTPUT_MODE" = local-tasks ] && [ "$(meta_value "$meta" kind)" = secondmate ]; then
+    jq -n '{state:"unknown",source:"none",detail:"secondmate endpoint not observed",raw:""}' > "$current_file" || current_rc=1
+    agent_alive=unknown
+  elif [ -n "$remote_host" ]; then
     jq -n '{state:"unknown",source:"none",detail:"remote endpoint liveness not collected by fleet snapshot",raw:""}' \
       > "$current_file" || current_rc=1
     agent_alive=unknown
@@ -848,8 +863,13 @@ task_json_lines() {
     meta_json=$(path_present_json "$original_meta" "$meta")
     status_json=$event_json
     report_json=$(path_present_json "$DATA/$id/report.md" "$report_path")
-    if [ -n "$worktree" ]; then worktree_json=$(path_present_json "$worktree"); else worktree_json=$(jq -n '{path:null,present:false}'); fi
-    if [ -n "$home" ] && [ -n "$remote_host" ]; then
+    if [ "$OUTPUT_MODE" = local-tasks ] && [ "$kind" = secondmate ]; then
+      worktree_json=$(jq -n '{path:null,present:null}')
+      home_json=$(jq -n '{path:null,present:null}')
+    elif [ -n "$worktree" ]; then worktree_json=$(path_present_json "$worktree"); else worktree_json=$(jq -n '{path:null,present:false}'); fi
+    if [ "$OUTPUT_MODE" = local-tasks ]; then
+      home_json=$(jq -n '{path:null,present:null}') # Do not inspect another home.
+    elif [ -n "$home" ] && [ -n "$remote_host" ]; then
       home_json=$(jq -n --arg path "$home" '{path:$path,present:null}')
     elif [ -n "$home" ]; then
       home_json=$(path_present_json "$home")
@@ -2010,6 +2030,19 @@ if [ "$OUTPUT_MODE" = contribution-input ]; then
 fi
 prefetch_task_current_states || { echo "fm-fleet-snapshot: task observation failed" >&2; exit 1; }
 TASKS_JSON=$(task_json_lines) || { echo "fm-fleet-snapshot: task snapshot failed" >&2; exit 1; }
+
+if [ "$OUTPUT_MODE" = local-tasks ]; then
+  local_dir=$(mktemp -d "${TMPDIR:-/tmp}/fm-fleet-local.XXXXXX") || exit 1
+  JSON_TRANSPORT_DIR=$local_dir
+  printf '%s\n' "$BACKLOG_JSON" > "$local_dir/backlog.json"
+  printf '%s\n' "$TASKS_JSON" > "$local_dir/tasks.json"
+  jq -n --arg fm_home "$FM_HOME" --slurpfile backlog "$local_dir/backlog.json" \
+    --slurpfile tasks "$local_dir/tasks.json" '
+      {schema:"fm-fleet-local-tasks.v1",fm_home:$fm_home,backlog:$backlog[0],
+       tasks:[$tasks[0][] as $t | $t + {backlog:([$backlog[0].records[]? |
+         select(.structured == true and .id == $t.id)][0] // null)}]}'
+  exit $?
+fi
 
 JSON_TRANSPORT_DIR=$(mktemp -d "${TMPDIR:-/tmp}/fm-fleet-snapshot.XXXXXX") \
   || { echo "fm-fleet-snapshot: temporary transport directory creation failed" >&2; exit 1; }
